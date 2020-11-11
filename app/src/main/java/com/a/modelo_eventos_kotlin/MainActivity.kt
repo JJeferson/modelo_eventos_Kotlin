@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-         email.setText("user@example.com")
+         nome.setText("user@example.com")
          senha.setText("123")
 
          buttonLogar.setOnClickListener { view ->
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        var recebeEmail = email.text.toString()
+        var recebeEmail = nome.text.toString()
         var recebeSenha = senha.text.toString()
 
         val EnviaDados = modeloLogin(email=recebeEmail,senha=recebeSenha)

@@ -30,10 +30,6 @@ class Lista_fragment : Fragment() {
         val sharedPreferences = getActivity()?.getSharedPreferences("ArquivoConsulta", AppCompatActivity.MODE_PRIVATE)
         val RecebeToken = sharedPreferences?.getString("Token", "")
 
-        val SearchViewBusca= view.findViewById<SearchView>(R.id.searchViewBusca)
-        SearchViewBusca.setQueryHint("Procure por Filmes, Autores ou Personagens");
-
-
             var recyclerViewBusca= view.findViewById<RecyclerView>(R.id.recyclerView)
             adapter = adapter(listaEventos)
             recyclerViewBusca.setAdapter(adapter)
