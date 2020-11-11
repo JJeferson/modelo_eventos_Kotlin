@@ -11,18 +11,79 @@
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="30dp">
 
         <TextView
-            android:id="@+id/t2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="200dp"
-            android:text="Recurso não implementado ainda."
+            android:id="@+id/nome"
+            android:layout_width="250dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="280dp"
+            android:text="TextView"
             android:textColor="@color/brancoTexto"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="25dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="32dp" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="165dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            android:text="TextView"
+            android:textColor="@color/brancoTexto"
+            app:layout_constraintTop_toBottomOf="@+id/nome"
+            tools:layout_editor_absoluteX="32dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="351dp"
+            android:layout_height="702dp"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/bio"
+            android:layout_width="232dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="32dp"
+            android:text="TextView"
+            android:textColor="@color/brancoTexto"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            tools:layout_editor_absoluteX="32dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="30dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_input_add"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/nome" />
+
+        <EditText
+            android:id="@+id/cpf"
+            android:layout_width="164dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="110dp"
+            android:ems="10"
+            android:hint="Digite aqui teu CPF"
+            android:inputType="number"
+            android:textColor="@color/brancoTexto"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            tools:layout_editor_absoluteX="32dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="112dp"
+            android:background="@color/pretoBackGround"
+            android:text="Button"
+            android:textColor="@color/brancoTexto"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            tools:layout_editor_absoluteX="203dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
