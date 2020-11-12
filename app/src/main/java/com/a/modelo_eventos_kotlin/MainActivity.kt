@@ -16,8 +16,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-         nome.setText("user@example.com")
-         senha.setText("123")
 
          buttonLogar.setOnClickListener { view ->
          Logar()

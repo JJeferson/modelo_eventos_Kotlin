@@ -1,25 +1,25 @@
 package com.a.modelo_eventos_kotlin.fragments
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.transition.Transition
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.a.modelo_eventos_kotlin.Adapter.adapter
-import com.a.modelo_eventos_kotlin.ConsumoAPI.listaRecuperaEventos
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import com.a.modelo_eventos_kotlin.ConsumoAPI.perfilRecuperaDadosPerfil
 import com.a.modelo_eventos_kotlin.Libs.controleLimiteCaracteresPERFILBio
 import com.a.modelo_eventos_kotlin.Libs.validaCamposPerfilStringNullOuVazio
 import com.a.modelo_eventos_kotlin.R
-import com.a.modelo_eventos_kotlin.modelos.modeloListaEventos
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_lista_recyclerview_eventos.view.*
-import kotlinx.android.synthetic.main.perfil_fragment.*
-import org.json.JSONArray
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.request.RequestOptions.bitmapTransform
+import com.bumptech.glide.request.target.SimpleTarget
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -35,7 +35,6 @@ class perfil_Fragment : Fragment() {
         var Nome= view.findViewById<TextView>(R.id.nome)
         var Email= view.findViewById<TextView>(R.id.email)
         var Bio= view.findViewById<TextView>(R.id.bio)
-       // var ImageView_foto= view.findViewById<ImageView>(R.id.imageView)
         var CpfEditText= view.findViewById<EditText>(R.id.cpfEditText)
         var Gravar= view.findViewById<Button>(R.id.gravar)
 
@@ -57,13 +56,7 @@ class perfil_Fragment : Fragment() {
             Bio.setText(formataBio)
 
 
-           // Nome.setText("teste")
-           // Email.setText("teste")
-           // Bio.setText("teste")
 
-
-         //   var CaminhoFoto:String = jsonObject.get("photo").toString()
-         //   Glide.with(ImageView_foto).load(CaminhoFoto).into(ImageView_foto)
 
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -93,3 +86,4 @@ class perfil_Fragment : Fragment() {
         return inflater.inflate(R.layout.perfil_fragment, container, false)
     }
 }
+
