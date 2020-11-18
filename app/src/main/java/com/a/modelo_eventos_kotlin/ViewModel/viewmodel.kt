@@ -2,21 +2,18 @@ package com.a.modelo_eventos_kotlin.ViewModel
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.a.modelo_eventos_kotlin.ConsumoAPI.loginRecuperaToken
 import com.a.modelo_eventos_kotlin.Repository.repository
-import com.a.modelo_eventos_kotlin.modelos.modeloListaEventos
 import com.a.modelo_eventos_kotlin.modelos.modeloLogin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class viewmodel(application: Application): AndroidViewModel(application), LifecycleOwner {
+class viewmodel(val repository :repository): ViewModel(), LifecycleOwner  {
 
-    private var repository: repository
+    fun  RecuperaPerfil(TokenRecebidoViaLogin:String) :String {
 
-
-    init {
-        repository = repository()
-    }//fim do init
+        var    dados:String = repository.RecuperaPerfil(TokenRecebidoViaLogin)
+        return dados
+    }
 
     fun  RecuperaJson(TokenRecebidoViaLogin:String) :String {
 

@@ -16,13 +16,18 @@ import com.a.modelo_eventos_kotlin.ConsumoAPI.perfilRecuperaDadosPerfil
 import com.a.modelo_eventos_kotlin.Libs.controleLimiteCaracteresPERFILBio
 import com.a.modelo_eventos_kotlin.Libs.validaCamposPerfilStringNullOuVazio
 import com.a.modelo_eventos_kotlin.R
+import com.a.modelo_eventos_kotlin.ViewModel.viewmodel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.bumptech.glide.request.target.SimpleTarget
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class perfil_Fragment : Fragment() {
 
@@ -39,30 +44,33 @@ class perfil_Fragment : Fragment() {
         var Gravar= view.findViewById<Button>(R.id.gravar)
 
 
-        var dadosComoString = perfilRecuperaDadosPerfil().executaRest(RecebeToken)
-        try {
-
-            var jsonObject = JSONObject(dadosComoString)
-            var RecebeNome = jsonObject.get("name").toString()
-            var RecebeEmail = jsonObject.get("email").toString()
-            var RecebeBio = jsonObject.get("description").toString()
-
-            var ValidaNome  = validaCamposPerfilStringNullOuVazio().executa(RecebeNome)
-            var ValidaEmail = validaCamposPerfilStringNullOuVazio().executa(RecebeEmail)
-            var ValidaBio   = validaCamposPerfilStringNullOuVazio().executa(RecebeBio)
-            var formataBio = controleLimiteCaracteresPERFILBio().executa(ValidaBio)
-            Nome.setText(ValidaNome)
-            Email.setText(ValidaEmail)
-            Bio.setText(formataBio)
 
 
+        CoroutineScope(Dispatchers.Main).launch {
+
+            val PerfilViewModel: viewmodel by viewModel()
+            var dadosComoString = RecebeToken?.let { PerfilViewModel.RecuperaPerfil(it) }
+            try {
+
+                var jsonObject = JSONObject(dadosComoString)
+                var RecebeNome = jsonObject.get("name").toString()
+                var RecebeEmail = jsonObject.get("email").toString()
+                var RecebeBio = jsonObject.get("description").toString()
+
+                var ValidaNome = validaCamposPerfilStringNullOuVazio().executa(RecebeNome)
+                var ValidaEmail = validaCamposPerfilStringNullOuVazio().executa(RecebeEmail)
+                var ValidaBio = validaCamposPerfilStringNullOuVazio().executa(RecebeBio)
+                var formataBio = controleLimiteCaracteresPERFILBio().executa(ValidaBio)
+                Nome.setText(ValidaNome)
+                Email.setText(ValidaEmail)
+                Bio.setText(formataBio)
 
 
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }//Final do try
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }//Final do try
 
-
+        }
 
     }
 

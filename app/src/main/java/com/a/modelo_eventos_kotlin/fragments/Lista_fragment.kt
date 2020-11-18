@@ -23,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class Lista_fragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -34,41 +35,46 @@ class Lista_fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
           var listaEventos = ArrayList<modeloListaEventos>()
           lateinit var adapter:adapter
-          lateinit var ListaViewModel: viewmodel
-          ListaViewModel = ViewModelProvider(this).get(viewmodel::class.java)
+          val ListaViewModel: viewmodel by viewModel()
+
+        CoroutineScope(Dispatchers.Main).launch {
 
 
-        val sharedPreferences = getActivity()?.getSharedPreferences("ArquivoConsulta", AppCompatActivity.MODE_PRIVATE)
-        val RecebeToken = sharedPreferences?.getString("Token", "")
+            val sharedPreferences = getActivity()?.getSharedPreferences(
+                "ArquivoConsulta",
+                AppCompatActivity.MODE_PRIVATE
+            )
+            val RecebeToken = sharedPreferences?.getString("Token", "")
 
-            var recyclerViewBusca= view.findViewById<RecyclerView>(R.id.recyclerView)
+            var recyclerViewBusca = view.findViewById<RecyclerView>(R.id.recyclerView)
             adapter = adapter(listaEventos)
             recyclerViewBusca.setAdapter(adapter)
-            recyclerViewBusca.layoutManager = LinearLayoutManager (getActivity())
+            recyclerViewBusca.layoutManager = LinearLayoutManager(getActivity())
 
 
 
 
-                getActivity()?.let {
-                    if (RecebeToken != null) {
-                        var JsonRecebido = ListaViewModel.RecuperaJson(RecebeToken)
+            getActivity()?.let {
+                if (RecebeToken != null) {
+                    var JsonRecebido = ListaViewModel.RecuperaJson(RecebeToken)
 
-                        listaRecuperaEventos().FormataJsonLista(JsonRecebido).observe(
-                            it,
-                            Observer<ArrayList<modeloListaEventos>> { it: ArrayList<modeloListaEventos> ->
-
-
-                                listaEventos.clear()
-                                listaEventos.addAll(it)
-                                adapter.addList(listaEventos)
+                    listaRecuperaEventos().FormataJsonLista(JsonRecebido).observe(
+                        it,
+                        Observer<ArrayList<modeloListaEventos>> { it: ArrayList<modeloListaEventos> ->
 
 
-                            })
+                            listaEventos.clear()
+                            listaEventos.addAll(it)
+                            adapter.addList(listaEventos)
 
-                }
+
+                        })
 
                 }
 
+            }
+
+        }
 
 
     }

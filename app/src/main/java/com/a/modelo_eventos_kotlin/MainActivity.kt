@@ -17,10 +17,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var LoginViewModel: viewmodel
+    private val LoginViewModel: viewmodel by viewModel()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +32,9 @@ class MainActivity : AppCompatActivity() {
           nome.setText("teste@gmail.com")
           senha.setText("123")
          buttonLogar.setOnClickListener { view ->
-         Logar()
+             CoroutineScope(Dispatchers.Main).launch {
+             Logar()
+             }
          }
 
 
@@ -39,7 +44,6 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("ArquivoConsulta", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        LoginViewModel = ViewModelProvider(this).get(viewmodel::class.java)
 
 
 
@@ -48,24 +52,22 @@ class MainActivity : AppCompatActivity() {
 
         val EnviaDados = modeloLogin(email=recebeEmail,senha=recebeSenha)
         var testaLogin: String =""
-       // testaLogin = loginRecuperaToken().Logar(EnviaDados)
+        testaLogin = LoginViewModel.Login(EnviaDados)
 
 
-       testaLogin = LoginViewModel.Login(EnviaDados)
+        when (testaLogin) {
+            "ERRO AO LOGAR" -> Toast.makeText(applicationContext,"Resposta do servidor:"+testaLogin,Toast.LENGTH_SHORT).show()
+            "" -> Toast.makeText(applicationContext,"Resposta vazia",Toast.LENGTH_SHORT).show()
+            null -> Toast.makeText(applicationContext,"Resposta do servidor: NULL",Toast.LENGTH_SHORT).show()  // Duas condições combinadas
+            else -> {
+                Toast.makeText(applicationContext,"Login em andamento",Toast.LENGTH_SHORT).show()
 
+                editor.putString("Token", testaLogin.toString())
+                editor.commit()
 
-
-        if(testaLogin.equals("ERRO AO LOGAR")){
-            Toast.makeText(applicationContext,"Resposta do servidor:"+testaLogin,Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(applicationContext,"Login em andamento",Toast.LENGTH_SHORT).show()
-
-            editor.putString("Token", testaLogin.toString())
-            editor.commit()
-
-            acessaTela()
+                acessaTela()
+            }
         }
-
     }
 
     fun acessaTela(){
