@@ -2,6 +2,7 @@ package com.a.modelo_eventos_kotlin.ViewModel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.a.modelo_eventos_kotlin.ConsumoAPI.loginRecuperaToken
 import com.a.modelo_eventos_kotlin.Repository.repository
 import com.a.modelo_eventos_kotlin.modelos.modeloListaEventos
 import com.a.modelo_eventos_kotlin.modelos.modeloLogin
@@ -17,23 +18,18 @@ class viewmodel(application: Application): AndroidViewModel(application), Lifecy
         repository = repository()
     }//fim do init
 
-    fun  Lista(TokenRecebidoViaLogin:String): MutableLiveData<ArrayList<modeloListaEventos>> {
-        //lateinit
-        var Lista:MutableLiveData<ArrayList<modeloListaEventos>> = MutableLiveData<ArrayList<modeloListaEventos>>()
-        viewModelScope.launch(Dispatchers.IO) {
-               Lista = repository.Lista(TokenRecebidoViaLogin)
-        }
-        return Lista
+    fun  RecuperaJson(TokenRecebidoViaLogin:String) :String {
+
+         var    Json:String = repository.RecuperaJson(TokenRecebidoViaLogin)
+         return Json
     }
 
 
 
     fun  Login(modeloLogin: modeloLogin):String{
-        var Login = ""
-        viewModelScope.launch(Dispatchers.IO) {
-            Login = repository.Login(modeloLogin)
-        }
-        return Login
+        var     Token:String = ""
+        Token = repository.Login(modeloLogin)
+        return  Token
     }
 
 

@@ -17,45 +17,16 @@ import java.io.IOException
 class listaRecuperaEventos {
 
 
-    fun Recupera(TokenRecebidoViaLogin:String): MutableLiveData<ArrayList<modeloListaEventos>> {
+    fun FormataJsonLista(Json:String): MutableLiveData<ArrayList<modeloListaEventos>> {
 
 
-
+        var data = Json
         var LiveData = MutableLiveData<ArrayList<modeloListaEventos>>()
         var listaEventos = ArrayList<modeloListaEventos>()
         listaEventos.clear()
 
-                var policy =
-                StrictMode.ThreadPolicy.Builder().permitAll().build()
-                StrictMode.setThreadPolicy(policy)
-
-        var client = OkHttpClient().newBuilder()
-            .build()
-
-        var recuperaToken = TokenRecebidoViaLogin
-        val request: Request = Request.Builder()
-            .url("https://selecao.api.homolog.somosdx.co/events")
-            .method("GET", null)
-            .addHeader(
-                "Authorization",
-                "Bearer "+recuperaToken
-            )
-            .build()
-
-
-        //--------------------------------------------
-
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {}
-
-
-            @Throws(IOException::class)
-            override fun onResponse(call: Call, response: Response) {
 
                 try {
-                    var data = response.body()?.string()
-
 
                     var jsonArray = JSONArray(data)
                     var contador: Int = 0
@@ -74,11 +45,11 @@ class listaRecuperaEventos {
                         var recebeCity        = jsonObject.get("city").toString()
 
                         var modeloListaEventos = modeloListaEventos(name=recebeName,
-                                                                    photo=recebePhoto,
-                                                                    description=recebeDescription,
-                                                                    date=recebeDate,
-                                                                    localName=recebeLocalName,
-                                                                    city=recebeCity)
+                            photo=recebePhoto,
+                            description=recebeDescription,
+                            date=recebeDate,
+                            localName=recebeLocalName,
+                            city=recebeCity)
 
 
                         listaEventos.add(modeloListaEventos)
@@ -91,10 +62,38 @@ class listaRecuperaEventos {
                     e.printStackTrace()
                 }//Final do try
 
-            }//Final do bloco de requisição
 
 
-        })
+
         return LiveData
     }
+
+    
+    fun RecuperaJson(TokenRecebidoViaLogin:String): String {
+
+        var policy =
+            StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
+        var client = OkHttpClient().newBuilder()
+            .build()
+
+        var recuperaToken = TokenRecebidoViaLogin
+        val request: Request = Request.Builder()
+            .url("https://selecao.api.homolog.somosdx.co/events")
+            .method("GET", null)
+            .addHeader(
+                "Authorization",
+                "Bearer "+recuperaToken
+            )
+            .build()
+
+
+        val response = client.newCall(request).execute()
+        var Json = response.body()!!.string()
+
+
+        return Json
+    }
+
 }

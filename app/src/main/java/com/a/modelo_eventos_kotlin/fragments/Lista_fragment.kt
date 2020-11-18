@@ -51,7 +51,9 @@ class Lista_fragment : Fragment() {
 
                 getActivity()?.let {
                     if (RecebeToken != null) {
-                        ListaViewModel.Lista(RecebeToken).observe(
+                        var JsonRecebido = ListaViewModel.RecuperaJson(RecebeToken)
+
+                        listaRecuperaEventos().FormataJsonLista(JsonRecebido).observe(
                             it,
                             Observer<ArrayList<modeloListaEventos>> { it: ArrayList<modeloListaEventos> ->
 
@@ -66,32 +68,6 @@ class Lista_fragment : Fragment() {
                 }
 
                 }
-
-
-
-
-        /*
-                getActivity()?.let {
-                    if (RecebeToken != null) {
-                        listaRecuperaEventos().Recupera(RecebeToken).observe(
-                            it,
-                            Observer<ArrayList<modeloListaEventos>> { it: ArrayList<modeloListaEventos> ->
-                                listaEventos.clear()
-                                listaEventos.addAll(it)
-                                adapter.addList(listaEventos)
-
-                            })
-                    }
-                }
-
-        */
-
-
-
-
-
-
-
 
 
 

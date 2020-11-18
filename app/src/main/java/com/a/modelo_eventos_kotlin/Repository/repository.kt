@@ -10,14 +10,16 @@ import com.a.modelo_eventos_kotlin.modelos.modeloLogin
 
 class repository: LifecycleOwner {
 
-    suspend fun   Login(modeloLogin: modeloLogin):String{
-        var    Login = loginRecuperaToken().Logar(modeloLogin)
-        return Login
+   fun   RecuperaJson(TokenRecebidoViaLogin:String):String{
+         var    Json =listaRecuperaEventos().RecuperaJson(TokenRecebidoViaLogin)
+         return Json
     }
-    suspend fun   Lista(TokenRecebidoViaLogin:String): MutableLiveData<ArrayList<modeloListaEventos>> {
-            var   Lista = listaRecuperaEventos().Recupera(TokenRecebidoViaLogin)
-           return Lista
+
+    fun   Login(modeloLogin: modeloLogin):String {
+      var    Token = loginRecuperaToken().Logar(modeloLogin)
+      return Token
     }
+
 
     override fun getLifecycle(): Lifecycle {
         TODO("Not yet implemented")

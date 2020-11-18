@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProvider
 import com.a.modelo_eventos_kotlin.ConsumoAPI.loginRecuperaToken
 import com.a.modelo_eventos_kotlin.ViewModel.viewmodel
+import com.a.modelo_eventos_kotlin.modelos.modeloListaEventos
 import com.a.modelo_eventos_kotlin.modelos.modeloLogin
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
@@ -46,10 +48,10 @@ class MainActivity : AppCompatActivity() {
 
         val EnviaDados = modeloLogin(email=recebeEmail,senha=recebeSenha)
         var testaLogin: String =""
-        //testaLogin = loginRecuperaToken().Logar(EnviaDados)
+       // testaLogin = loginRecuperaToken().Logar(EnviaDados)
 
 
-        testaLogin =  LoginViewModel.Login(EnviaDados)
+       testaLogin = LoginViewModel.Login(EnviaDados)
 
 
 
@@ -58,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         }else{
             Toast.makeText(applicationContext,"Login em andamento",Toast.LENGTH_SHORT).show()
 
-            editor.putString("Token", testaLogin)
+            editor.putString("Token", testaLogin.toString())
             editor.commit()
 
             acessaTela()

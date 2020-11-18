@@ -1,6 +1,9 @@
 package com.a.modelo_eventos_kotlin.ConsumoAPI
 
 import android.os.StrictMode
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.a.modelo_eventos_kotlin.modelos.modeloListaEventos
 import com.a.modelo_eventos_kotlin.modelos.modeloLogin
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -8,9 +11,10 @@ import okhttp3.Request
 import okhttp3.RequestBody
 
 
-class loginRecuperaToken {
+class loginRecuperaToken() {
 
-    fun Logar(modeloLogin: modeloLogin):String{
+    fun Logar(modeloLogin: modeloLogin): String{
+       // var TokenRecebido = MutableLiveData<String>()
         var Token:String = ""
 
         var policy =
@@ -49,6 +53,7 @@ class loginRecuperaToken {
             var ajuste6: String = ajuste5.replace(":", "")
             var ajuste7: String = ajuste6.replace(" ", "")
             Token = ajuste7
+           // TokenRecebido.postValue(Token)
         }else{
           Token = "ERRO AO LOGAR"
         }
@@ -56,6 +61,7 @@ class loginRecuperaToken {
 
         //-------
         return Token
+
     }
 
 }
