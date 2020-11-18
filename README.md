@@ -3,4 +3,6 @@
                                           
                                           Link video de apresentação:
                                           
-                                          https://www.screencast.com/t/IAFid08QaE
+                                          Refatorado, padrão MVVM, usando Coroutines para separar as Tread.
+                                          Além de usar Injeção de dependencias com KOIN.
+                                          https://insert-koin.io/
